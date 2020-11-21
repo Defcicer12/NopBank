@@ -75,27 +75,43 @@ class PichulaController extends Controller
 
     protected function delete($idPichula)
     {
+
+        Pichula::whereId($idPichula['idPichula'])->delete()
+        ([
+        $pichula['nombre'],
+         $pichula['longitud'],
+         $pichula['ancho'],
+        $pichula['largoCm'],
+        $pichula['largoMt'],
         //programen aqui
+        ]);
 
         return ['new' =>0,'data'=>[],'errors' => ''];
     }
 
     protected function search($idPichula)
     {
-        //programen aqui
+        //regresa true si lo encontro o false si no 
+        $pichula['nombre'],
+        $pichula['longitud'],
+        $pichula['ancho'],
+        $pichula['largoCm'],
+        $pichula['largoMt'],
+        
+        //programen aqui/intento hecho uwu grazias
 
-        return ['new' =>0,'data'=>[],'errors' => ''];
+        return ['new' =>0,'data'=>[],'errors' =>'', true ];
     }
 
     protected function validate($pichula)
     {
         //Checar reglas de validación de laravel
         return Validator::make($pichula, [
-            'nombre' => ['required', 'string', 'max:45'],
+            'nombre' => ['required', 'string', 'max:45'],//por si acaso uwu
             'longitud' => ['required', 'numeric', 'digits:10'],
-            'ancho' =>['required', 'numeric'],
-            'largoCm' =>['required', 'max:30'],
-            'largoMt' => ['required', 'max:13','unique:cliente,rfc'],
+            'ancho' =>['required', 'numeric','digits:10'],
+            'largoCm' =>['required','numeric', 'digits:10'],
+            'largoMt' => ['required', 'numeric','digits:10'],
             ]);
         return ['new' =>0,'data'=>[],'errors' => ''];
     }
