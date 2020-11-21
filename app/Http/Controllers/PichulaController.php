@@ -73,39 +73,28 @@ class PichulaController extends Controller
         return ['new' =>0,'data'=>[],'errors' => ''];
     }
 
-    protected function delete($idPichula)
+    protected function delete(array $pichula)
     {
 
-        Pichula::whereId($idPichula['idPichula'])->delete()
-        ([
-        $pichula['nombre'],
-         $pichula['longitud'],
-         $pichula['ancho'],
-        $pichula['largoCm'],
-        $pichula['largoMt'],
-        //programen aqui
-        ]);
+        $error = Pichula::whereId($pichula['idPichula'])->delete(); // si iban a usarlo como arreglo esto tenía que ser un arreglo
+        // no se necesita más que ubicar el registro y borrarlo, no se pasa info al borrar, que clase de update creen que es esto?
 
-        return ['new' =>0,'data'=>[],'errors' => ''];
+        return ['new' =>$error,'data'=>[],'errors' => ''];
     }
 
-    protected function search($idPichula)
+    protected function search(array $pichula)
     {
-        //regresa true si lo encontro o false si no 
-        $pichula['nombre'],
-        $pichula['longitud'],
-        $pichula['ancho'],
-        $pichula['largoCm'],
-        $pichula['largoMt'],
-        
-        //programen aqui/intento hecho uwu grazias
+        //regresa true si lo encontro o false si no( no es cierto, cuando regresa false? nisiquiera existía un if)
+        $pichulaEncontrada = Pichula::whereId($pichula['idPichula'])->first(); //asi de fácil estaba
+        //programen aqui/intento hecho uwu grazias(mal intento)
 
-        return ['new' =>0,'data'=>[],'errors' =>'', true ];
+        return ['new' =>$pichulaEncontrada,'data'=>[],'errors' =>'', true ];
     }
 
     protected function validate($pichula)
     {
         //Checar reglas de validación de laravel
+        //este estuvo muy bien, los tkm
         return Validator::make($pichula, [
             'nombre' => ['required', 'string', 'max:45'],//por si acaso uwu
             'longitud' => ['required', 'numeric', 'digits:10'],
@@ -113,6 +102,5 @@ class PichulaController extends Controller
             'largoCm' =>['required','numeric', 'digits:10'],
             'largoMt' => ['required', 'numeric','digits:10'],
             ]);
-        return ['new' =>0,'data'=>[],'errors' => ''];
     }
 }
